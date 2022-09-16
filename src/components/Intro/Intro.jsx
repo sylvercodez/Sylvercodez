@@ -70,7 +70,7 @@ const Intro = () => {
           <span style={{ color: darkMode ? "white" : "" }}>Hy! I Am Sylvercodez</span>
           <span className="txt-rotate" dataPeriod="1000" data-rotate='[ "Web Developer", "Wordpress developeer", "Product Manager" ]'><span className="wrap">A {text}</span></span>
          
-          <span className="smallers">
+          <span style={{ color: darkMode ? "white" : "" }} className={ darkMode ? "smaller" : "bosss" } >
           A seasoned professional with over 2 years' work experience in Front End development with a
 passion for responsive web designs and finding solutions. I am adept in applying HTML, CSS,
 React, BootStrap, JavaScript, Python, Django and Wordpress development  to building innovative
