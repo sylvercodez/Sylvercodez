@@ -7,9 +7,9 @@
 
 }
 .imageproj{
-  width: 500px;
-  object-fit: cover;
-  height: 260px;
+  width: 450px;
+  object-fit: contain;
+  
 }
 /* heading */
 .portfolio span:nth-of-type(1) {
@@ -125,7 +125,7 @@
 }
 .proj-imgbx::before {
   content: "";
-  background: linear-gradient(90.21deg, #fdc50f -5.91%, #1A89E2 111.58%);
+  background: linear-gradient(90.21deg, #edf331 -5.91%, #1A89E2 111.58%);
   opacity: 0.85;
   position: absolute;
   width: 100%;
