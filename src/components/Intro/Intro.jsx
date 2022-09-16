@@ -67,7 +67,7 @@ const Intro = () => {
       <div className="i-left">
         <div className="i-name">
           {/* yahan change hy darkmode ka */}
-          <span style={{ color: darkMode ? "white" : "" }}>Hy! I Am Syvercodez</span>
+          <span style={{ color: darkMode ? "white" : "" }}>Hy! I Am Sylvercodez</span>
           <span className="txt-rotate" dataPeriod="1000" data-rotate='[ "Web Developer", "Wordpress developeer", "Product Manager" ]'><span className="wrap">A {text}</span></span>
          
           <span className="smallers">
