@@ -1,56 +1,87 @@
-.contact-form{
-    padding: 0 3rem 0 3rem;
-    display: flex;
-    height: 80vh;
-    margin-top: 4rem;
-      /* scroll */
-  padding-top: 3rem;
-}
 
-.c-right{
-    display: flex;
-    justify-content: center;
+/************ Projects Css ************/
+.contact {
+ display: flex;
+ justify-content:  center;
+  }
+  .contact img {
+    width: 92%;
+  }
+  .contact h2 {
+      font-size: 45px;
+      font-weight: 700;
+    margin-bottom: 30px;
+  }
+  .contact form input, .contact form textarea {
+    width: 86%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #000;
+    border-radius: 20px;
+    color: rgb(54, 54, 54);
+    margin: 0 0 8px 0;
+    padding: 18px 26px;
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: 0.8px;
+    transition: 0.3s ease-in-out;
+  }
+  .contact form input:focus, .contact form textarea:focus {
+    background: rgba(255, 255, 255, 1);
+    color: #121212;
+  }
+  .contact form input::placeholder, .contact form textarea::placeholder {
+    font-size: 16px;
+    font-weight: 400;
+    color: rgb(79, 70, 70);
+  }
+  .contact form input:focus::placeholder, .contact form textarea:focus::placeholder {
+    color: #121212;
+    opacity: 0.8;
+  }
+  .contact form button {
+    font-weight: 700;
+    color: #000;
+    background-color: #fff;
+    padding: 14px 48px;
+    font-size: 18px;
+    margin-top: 25px;
+    border-radius: 20px;
+    /* border-radius: 0; */
     position: relative;
-    flex: 1;
-}
-
-.c-right>form
-{
+    transition: 0.3s ease-in-out;
+  }
+  .contact form button span {
+    z-index: 1;
+    position: relative;
+  }
+  .contact form button:hover {
+    color: #fff;
+  }
+  .contact form button::before {
+    content: "";
+    background: #FDC50F;
+    width: 0;
+    color: #fff;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    border-radius: 20px;
+    left: 0;
+    z-index: 0;
+    transition: 0.3s ease-in-out;
+  }
+  .contact form button:hover::before {
+    width: 100%;
+  }
+  .conts{
     display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    align-items: center;
-    
-}
+    margin-bottom: 100px;
+  }
 
-.c-right .user{
-    width: 20rem;
-    height: 2rem;
-    padding: 0.3em;
-    outline: none;
-    border: 2px solid var(--orange);
-    border-radius: 8px;
-    font-size: 16px;   
-}
-
-textarea{
-    height: 4rem!important;
-}
-
-.c-blur1{
-    top: 1rem;
-    left: 8rem;
-}
-
-@media screen and (max-width: 480px) {
-    .contact-form{
-        padding: 0;
+  @media screen and (max-width: 1000px) {
+    .conts{
+        display: flex;
         flex-direction: column;
-        gap: 5rem;
-        height: 40rem;
-    }
-    .c-right .user{
-        width: 16rem;
-    }
+      }
 
 }   

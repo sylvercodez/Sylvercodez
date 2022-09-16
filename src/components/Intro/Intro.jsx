@@ -1,37 +1,80 @@
-import React, { useContext } from "react";
+import React, { useContext,useState, useEffect } from "react";
+// import {  } from "react";
 import "./Intro.css";
-import Vector1 from "../../img/Vector1.png";
-import Vector2 from "../../img/Vector2.png";
-import boy from "../../img/boy.png";
-import glassesimoji from "../../img/glassesimoji.png";
-import thumbup from "../../img/thumbup.png";
-import crown from "../../img/crown.png";
-import FloatinDiv from "../FloatingDiv/FloatingDiv";
+import boy from "../../img/biggy.png";
+
 import Github from "../../img/github.png";
 import LinkedIn from "../../img/linkedin.png";
 import Instagram from "../../img/instagram.png";
 import { themeContext } from "../../Context";
 import { motion } from "framer-motion";
 import { Link } from "react-scroll";
+import { Container, Row, Col } from "react-bootstrap";
+
+import 'animate.css';
+import TrackVisibility from 'react-on-screen';
+
 const Intro = () => {
   // Transition
+  const [loopNum, setLoopNum] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [text, setText] = useState('');
+  const [delta, setDelta] = useState(300 - Math.random() * 100);
+  const [index, setIndex] = useState(1);
+  const toRotate = [ "Web Developer", "Wordpress Developer", "Product Manager" ];
+  const period = 2000;
+
   const transition = { duration: 2, type: "spring" };
 
   // context
   const theme = useContext(themeContext);
   const darkMode = theme.state.darkMode;
+  useEffect(() => {
+    let ticker = setInterval(() => {
+      tick();
+    }, delta);
 
+    return () => { clearInterval(ticker) };
+  }, [text])
+
+  const tick = () => {
+    let i = loopNum % toRotate.length;
+    let fullText = toRotate[i];
+    let updatedText = isDeleting ? fullText.substring(0, text.length - 1) : fullText.substring(0, text.length + 1);
+
+    setText(updatedText);
+
+    if (isDeleting) {
+      setDelta(prevDelta => prevDelta / 2);
+    }
+
+    if (!isDeleting && updatedText === fullText) {
+      setIsDeleting(true);
+      setIndex(prevIndex => prevIndex - 1);
+      setDelta(period);
+    } else if (isDeleting && updatedText === '') {
+      setIsDeleting(false);
+      setLoopNum(loopNum + 1);
+      setIndex(1);
+      setDelta(500);
+    } else {
+      setIndex(prevIndex => prevIndex + 1);
+    }
+  }
   return (
     <div className="Intro" id="Intro">
       {/* left name side */}
       <div className="i-left">
         <div className="i-name">
           {/* yahan change hy darkmode ka */}
-          <span style={{ color: darkMode ? "white" : "" }}>Hy! I Am</span>
-          <span>Andrew Thomas</span>
-          <span>
-            Frontend Developer with high level of experience in web designing
-            and development, producting the Quality work
+          <span style={{ color: darkMode ? "white" : "" }}>Hy! I Am Syvercodez</span>
+          <span className="txt-rotate" dataPeriod="1000" data-rotate='[ "Web Developer", "Wordpress developeer", "Product Manager" ]'><span className="wrap">A {text}</span></span>
+         
+          <span className="smallers">
+          A seasoned professional with over 2 years' work experience in Front End development with a
+passion for responsive web designs and finding solutions. I am adept in applying HTML, CSS,
+React, BootStrap, JavaScript, Python, Django and Wordpress development  to building innovative
+and customer centric products with a mobile first approach.  
           </span>
         </div>
         <Link to="contact" smooth={true} spy={true}>
@@ -39,44 +82,24 @@ const Intro = () => {
         </Link>
         {/* social icons */}
         <div className="i-icons">
-          <img src={Github} alt="" />
-          <img src={LinkedIn} alt="" />
-          <img src={Instagram} alt="" />
+        <a href="https://github.com/sylvercodez"target="_blank">  <img src={Github} alt="" /></a>
+          <a href="https://www.linkedin.com/in/sylvercodez" target="_blank"> <img src={LinkedIn} alt="" /> </a>
+          <a href="https://instagram.com/sylvercodez1" target="_blank">  <img src={Instagram} alt="" /> </a>
         </div>
       </div>
       {/* right image side */}
       <div className="i-right">
-        <img src={Vector1} alt="" />
+        {/* <img src={Vector1} alt="" />
         <img src={Vector2} alt="" />
-        <img src={boy} alt="" />
+       */}
+        <TrackVisibility>
+              {({ isVisible }) =>
+                <div className={isVisible ? "animate__animated animate__zoomIn" : ""}>
+                   <img src={boy} className="imgss" alt="" />
+                </div>}
+            </TrackVisibility>
         {/* animation */}
-        <motion.img
-          initial={{ left: "-36%" }}
-          whileInView={{ left: "-24%" }}
-          transition={transition}
-          src={glassesimoji}
-          alt=""
-        />
-
-        <motion.div
-          initial={{ top: "-4%", left: "74%" }}
-          whileInView={{ left: "68%" }}
-          transition={transition}
-          className="floating-div"
-        >
-          <FloatinDiv img={crown} text1="Web" text2="Developer" />
-        </motion.div>
-
-        {/* animation */}
-        <motion.div
-          initial={{ left: "9rem", top: "18rem" }}
-          whileInView={{ left: "0rem" }}
-          transition={transition}
-          className="floating-div"
-        >
-          {/* floatinDiv mein change hy dark mode ka */}
-          <FloatinDiv img={thumbup} text1="Best Design" text2="Award" />
-        </motion.div>
+      
 
         <div className="blur" style={{ background: "rgb(238 210 255)" }}></div>
         <div

@@ -1,64 +1,99 @@
-import React, { useContext, useRef, useState } from "react";
-import "./Contact.css";
-import emailjs from "@emailjs/browser";
-import { themeContext } from "../../Context";
-const Contact = () => {
-  const theme = useContext(themeContext);
-  const darkMode = theme.state.darkMode;
-  const form = useRef();
-  const [done, setDone] = useState(false)
-  const sendEmail = (e) => {
-    e.preventDefault();
+import { useState } from "react";
+import { Container, Row, Col } from "react-bootstrap";
 
-    emailjs
-      .sendForm(
-        "service_2mu5xtl",
-        "template_m5udu2c",
-        form.current,
-        "VLwg1ltOWvnCYAiK_"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-          setDone(true);
-          form.reset();
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
+import "./Contact.css";
+import contactImg from "../../img/contact-img.svg"; 
+import 'animate.css';
+import TrackVisibility from 'react-on-screen';
+
+const Portfolio = () => {
+  const formInitialDetails = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    message: ''
+  }
+  const [formDetails, setFormDetails] = useState(formInitialDetails);
+  const [buttonText, setButtonText] = useState('Send');
+  const [status, setStatus] = useState({});
+
+  const onFormUpdate = (category, value) => {
+      setFormDetails({
+        ...formDetails,
+        [category]: value
+      })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setButtonText("Sending...");
+    let response = await fetch("http://localhost:5000/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify(formDetails),
+    });
+    setButtonText("Send");
+    let result = await response.json();
+    setFormDetails(formInitialDetails);
+    if (result.code == 200) {
+      setStatus({ succes: true, message: 'Message sent successfully'});
+    } else {
+      setStatus({ succes: false, message: 'Something went wrong, please try again later.'});
+    }
   };
 
   return (
-    <div className="contact-form" id="contact">
-      {/* left side copy and paste from work section */}
-      <div className="w-left">
-        <div className="awesome">
-          {/* darkMode */}
-          <span style={{color: darkMode?'white': ''}}>Get in Touch</span>
-          <span>Contact me</span>
-          <div
-            className="blur s-blur1"
-            style={{ background: "#ABF1FF94" }}
-          ></div>
-        </div>
-      </div>
-      {/* right side form */}
-      <div className="c-right">
-        <form ref={form} onSubmit={sendEmail}>
-          <input type="text" name="user_name" className="user"  placeholder="Name"/>
-          <input type="email" name="user_email" className="user" placeholder="Email"/>
-          <textarea name="message" className="user" placeholder="Message"/>
-          <input type="submit" value="Send" className="button"/>
-          <span>{done && "Thanks for Contacting me"}</span>
-          <div
-            className="blur c-blur1"
-            style={{ background: "var(--purple)" }}
-          ></div>
-        </form>
-      </div>
-    </div>
+    <section className="contact" id="connect">
+      <Container>
+      <div className="conts">
+         <div>
+            <TrackVisibility>
+              {({ isVisible }) =>
+                <img className={isVisible ? "animate__animated animate__zoomIn" : ""} src={contactImg} alt="Contact Us"/>
+              }
+            </TrackVisibility>
+            </div>
+        <div>
+            <TrackVisibility>
+              {({ isVisible }) =>
+                <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
+                <h2>Get In Touch</h2>
+                <form onSubmit={handleSubmit}>
+            
+                    <Col size={12} sm={6} className="px-1">
+                      <input type="text" value={formDetails.firstName} placeholder="First Name" onChange={(e) => onFormUpdate('firstName', e.target.value)} />
+                    </Col>
+                    <Col size={12} sm={6} className="px-1">
+                      <input type="text" value={formDetails.lasttName} placeholder="Last Name" onChange={(e) => onFormUpdate('lastName', e.target.value)}/>
+                    </Col>
+                    <Col size={12} sm={6} className="px-1">
+                      <input type="email" value={formDetails.email} placeholder="Email Address" onChange={(e) => onFormUpdate('email', e.target.value)} />
+                    </Col>
+                    <Col size={12} sm={6} className="px-1">
+                      <input type="tel" value={formDetails.phone} placeholder="Phone No." onChange={(e) => onFormUpdate('phone', e.target.value)}/>
+                    </Col>
+                    <Col size={12} className="px-1">
+                      <textarea rows="6" value={formDetails.message} placeholder="Message" onChange={(e) => onFormUpdate('message', e.target.value)}></textarea>
+                      <button type="submit"><span>{buttonText}</span></button>
+                    </Col>
+                    {
+                      status.message &&
+                      <Col>
+                        <p className={status.success === false ? "danger" : "success"}>{status.message}</p>
+                      </Col>
+                    }
+                 
+                </form>
+              </div>}
+            </TrackVisibility>
+            </div>
+            </div>
+      </Container>
+    </section>
   );
 };
 
-export default Contact;
+export default Portfolio;

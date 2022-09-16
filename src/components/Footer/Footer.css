@@ -5,6 +5,10 @@
   position: relative;
   margin-top: -7rem;
 }
+.fooots{
+  font-size: 46px;
+    padding-top: 125px;
+}
 .f-content {
   position: absolute;
   display: flex;

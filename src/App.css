@@ -1,7 +1,7 @@
 :root
 {
   --yellow: #F5C32C;
-    --orange : #FCA61F;
+    --orange : #1a89e2;
     --black : #242D49;
     --gray : #788097;
     --blueCard : #DDF8FE;
@@ -15,6 +15,8 @@
     padding: 0.5rem 3.5rem;
     overflow: hidden;
     color: var(--black);    
+    max-width: 1440px;
+    margin: auto;
 }
 
 .button {
